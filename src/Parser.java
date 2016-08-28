@@ -80,6 +80,12 @@ public class Parser {
 				e.add(new DevideNumber(x.get(0), t.get(0)));
 				e.add(new DevideUnit(x.get(1), t.get(1)));
 				x = e;
+			} else if (str.equals("^")) {
+				List<Expression> t = createFactor();
+				List<Expression> e = new ArrayList<Expression>();
+				e.add(new PowNumber(x.get(0), t.get(0)));
+				e.add(new PowUnit(x.get(1), t.get(0)));
+				x = e;
 			} else {
 				programCounter.previous();
 				break;
@@ -88,29 +94,46 @@ public class Parser {
 		return x;
 	}
 	
+	private List<Expression> createUnit(List<Expression> arg0, String arg1) {
+		String unit = arg1.replaceAll("(\\)\\[|\\])", "");
+		List<String> parsedUnit = UnitParser.evaluatePrefix("1", unit);
+		List<Expression> answer = new ArrayList<Expression>();
+		answer.add(new TimeNumber(arg0.get(0), new Number(parsedUnit.get(0))));
+		answer.add(new Unit(unit));
+		return answer;
+	}
+	
 	private List<Expression> createFactor() {
 		String str = programCounter.next();
 		if (str.matches(".*\\d.*")) {
 			programCounter.previous();
 			List<Expression> e = createNumber();
 			return e;
-		} else {
+		} else if (programCounter.hasNext()) {
 			List<Expression> e = createExpression(); //再帰下がる
 			// 下がった再帰から出てきたところ.ここで,はじめのカッコと閉じカッコの部分を確認する.
+			String next = programCounter.next();
 			if (str.equals("(")) {
-				if (!programCounter.next().equals(")")) System.out.println("error");
+				if (next.matches("^\\)\\[.*")) {
+					e = createUnit(e, next);
+				} else if (!next.equals(")")) {
+					System.out.println("error");
+				}
 			} else if (str.equals("sqrt(")) {
-				if (programCounter.next().equals(")")) {
-					List<Expression> t = new ArrayList<Expression>();
-					t.add(new SqrtNumber(e.get(0)));
-					e = t;
-				} else {
+				Expression t = new SqrtNumber(e.get(0));
+				e.set(0, t);
+				if (next.matches("^\\)\\[.*")) {
+					e = createUnit(e, next);
+				} else if (!next.equals(")")) {
 					System.out.println("error!");
 				}
 			} else {
 				System.out.println("command not found : " + str.replaceAll("\\(", ""));
-			}
+			} 
 			return e;
+		} else {
+			System.out.println("error");
+			return null;
 		}
 	}
 		

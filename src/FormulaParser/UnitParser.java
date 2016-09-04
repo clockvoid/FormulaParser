@@ -79,6 +79,7 @@ public abstract class UnitParser {
 		for (Map.Entry<String, String> set : arg0.entrySet()) {
 			unitString += set.getKey() + (set.getValue().equals("1") ? "" : "^" + (set.getKey().equals("void") ? "0" : set.getValue())) + ".";
 		}
+		if (unitString.equals(""))unitString = "void^0";
 		return unitString.replaceAll("\\.$", "");
 	}
 	

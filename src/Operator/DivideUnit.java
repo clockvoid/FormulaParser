@@ -23,14 +23,16 @@ public class DivideUnit extends Operator {
 		Map<String, String> unitMap1 = UnitParser.createUnitMap(children.get(0).evaluate());
 		Map<String, String> unitMap2 = UnitParser.createUnitMap(children.get(1).evaluate());
 		Map<String, String> bondedUnit = new HashMap<String, String>();
-		Set<String> keySet = unitMap1.keySet();
+		Set<String> keySet = unitMap2.keySet();
 		for (String str : keySet) {
-			String tmp = unitMap2.get(str);
+			String tmp = unitMap1.get(str);
 			if (tmp != null) {
-				String num = new BigDecimal(tmp).add(new BigDecimal(unitMap1.get(str)).negate()).toString();
+				String num = new BigDecimal(tmp).add(new BigDecimal(unitMap2.get(str)).negate()).toString();
 				unitMap1.remove(str);
 				unitMap2.remove(str);
-				bondedUnit.put(str, num);
+				if (!num.equals("0")) bondedUnit.put(str, num);
+			} else {
+				unitMap2.replace(str, new BigDecimal(unitMap2.get(str)).negate().toString());
 			}
 		}
 		bondedUnit.putAll(unitMap1);

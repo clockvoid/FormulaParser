@@ -1,5 +1,4 @@
 package Factor;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import Exception.RuntimeErrorException;
@@ -17,9 +16,9 @@ public class PowNumber extends Operator {
 	public String evaluate() throws RuntimeErrorException {
 		// TODO Auto-generated method stub
 		ArrayList<Expression> children = getChildren();
-		BigDecimal child1Decimal = new BigDecimal(children.get(0).evaluate());
-		BigDecimal child2Decimal = new BigDecimal(children.get(1).evaluate());
-		return child1Decimal.pow(child2Decimal.intValue()).toString();
+		double child1Decimal = Double.parseDouble(children.get(0).evaluate());
+		double child2Decimal = Double.parseDouble(children.get(1).evaluate());
+		return new Double(Math.pow(child1Decimal, child2Decimal)).toString();
 	}
 
 }

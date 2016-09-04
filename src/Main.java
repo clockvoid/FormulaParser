@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			Parser parser = new Parser("sqrt( 4 )[m^2] * 12");
+			Parser parser = new Parser("1E2 / 4");
 			Expression exp = parser.compile();
 			System.out.println(exp.evaluate());
 		} catch (RuntimeErrorException e) {

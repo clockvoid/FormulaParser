@@ -30,7 +30,7 @@ public class TimeUnit extends Operator {
 				String num = new BigDecimal(tmp).add(new BigDecimal(unitMap1.get(str))).toString();
 				unitMap1.remove(str);
 				unitMap2.remove(str);
-				bondedUnit.put(str, num);
+				if (!num.equals("0")) bondedUnit.put(str, num);
 			}
 		}
 		bondedUnit.putAll(unitMap1);

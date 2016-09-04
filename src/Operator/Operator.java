@@ -1,4 +1,8 @@
+package Operator;
 import java.util.ArrayList;
+
+import Exception.RuntimeErrorException;
+import FormulaParser.Expression;
 
 
 public abstract class Operator implements Expression {
@@ -19,6 +23,6 @@ public abstract class Operator implements Expression {
 	}
 	
 	@Override
-	abstract public String evaluate();
+	abstract public String evaluate() throws RuntimeErrorException;
 
 }

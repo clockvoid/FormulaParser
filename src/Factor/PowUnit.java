@@ -1,6 +1,12 @@
+package Factor;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+
+import Exception.RuntimeErrorException;
+import FormulaParser.Expression;
+import FormulaParser.UnitParser;
+import Operator.Operator;
 
 
 public class PowUnit extends Operator {
@@ -10,7 +16,7 @@ public class PowUnit extends Operator {
 	}
 	
 	@Override
-	public String evaluate() {
+	public String evaluate() throws RuntimeErrorException {
 		// TODO Auto-generated method stub
 		List<Expression> children = getChildren();
 		Map<String, String> unitMap = UnitParser.createUnitMap(children.get(0).evaluate());

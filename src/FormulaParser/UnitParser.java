@@ -1,3 +1,4 @@
+package FormulaParser;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public abstract class UnitParser {
 			put("m", "-3");
 			put("É ", "-6");
 			put("n", "-9");
+			put("p", "-12");
 		}
 	};
 	
@@ -75,7 +77,7 @@ public abstract class UnitParser {
 	public static String createUnitString(Map<String, String> arg0) {
 		String unitString = "";
 		for (Map.Entry<String, String> set : arg0.entrySet()) {
-			unitString += set.getKey() + (set.getValue().equals("1") ? "" : "^" + set.getValue()) + ".";
+			unitString += set.getKey() + (set.getValue().equals("1") ? "" : "^" + (set.getKey().equals("void") ? "0" : set.getValue())) + ".";
 		}
 		return unitString.replaceAll("\\.$", "");
 	}

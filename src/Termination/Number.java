@@ -1,3 +1,5 @@
+package Termination;
+
 
 public class Number extends Termination {
 

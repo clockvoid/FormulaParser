@@ -1,3 +1,6 @@
+package Termination;
+import FormulaParser.Expression;
+
 
 public abstract class Termination implements Expression {
 

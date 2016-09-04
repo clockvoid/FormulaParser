@@ -1,3 +1,7 @@
+package Factor;
+import Exception.RuntimeErrorException;
+import FormulaParser.Expression;
+
 
 public abstract class Factor implements Expression {
 
@@ -12,6 +16,6 @@ public abstract class Factor implements Expression {
 	}
 	
 	@Override
-	abstract public String evaluate();
+	abstract public String evaluate() throws RuntimeErrorException;
 
 }

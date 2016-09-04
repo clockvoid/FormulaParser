@@ -1,18 +1,23 @@
+package Operator;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import Exception.RuntimeErrorException;
+import FormulaParser.Expression;
+import FormulaParser.UnitParser;
 
-public class DevideUnit extends Operator {
 
-	public DevideUnit(Expression arg0, Expression arg1) {
+public class DivideUnit extends Operator {
+
+	public DivideUnit(Expression arg0, Expression arg1) {
 		setChildren(arg0, arg1);
 	}
 	
 	@Override
-	public String evaluate() {
+	public String evaluate() throws RuntimeErrorException {
 		// TODO Auto-generated method stub
 		ArrayList<Expression> children = getChildren();
 		Map<String, String> unitMap1 = UnitParser.createUnitMap(children.get(0).evaluate());

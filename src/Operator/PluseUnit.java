@@ -1,4 +1,8 @@
+package Operator;
 import java.util.ArrayList;
+
+import Exception.RuntimeErrorException;
+import FormulaParser.Expression;
 
 public class PluseUnit extends Operator {
 
@@ -7,7 +11,7 @@ public class PluseUnit extends Operator {
 	}
 	
 	@Override
-	public String evaluate() {
+	public String evaluate() throws RuntimeErrorException {
 		// TODO Auto-generated method stub
 		ArrayList<Expression> children = getChildren();
 		String unit1 = children.get(0).evaluate();
@@ -15,8 +19,7 @@ public class PluseUnit extends Operator {
 		if (unit1.equals(unit2)) {
 			return unit1;
 		} else {
-			System.out.println("error!");
-			return null;
+			throw new RuntimeException("It does not match unit " + unit1 + " and " + unit2 + ".");
 		}
 	}
 

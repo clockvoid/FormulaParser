@@ -1,8 +1,13 @@
+package Operator;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import Exception.RuntimeErrorException;
+import FormulaParser.Expression;
+import FormulaParser.UnitParser;
 
 
 public class TimeUnit extends Operator {
@@ -12,7 +17,7 @@ public class TimeUnit extends Operator {
 	}
 	
 	@Override
-	public String evaluate() {
+	public String evaluate() throws RuntimeErrorException {
 		// TODO Auto-generated method stub
 		ArrayList<Expression> children = getChildren();
 		Map<String, String> unitMap1 = UnitParser.createUnitMap(children.get(0).evaluate());

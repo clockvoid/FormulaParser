@@ -1,20 +1,23 @@
+package Operator;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import Exception.RuntimeErrorException;
+import FormulaParser.Expression;
 
-public class PowNumber extends Operator {
+public class MinusNumber  extends Operator {
 
-	public PowNumber(Expression arg0, Expression arg1) {
+	public MinusNumber(Expression arg0, Expression arg1) {
 		setChildren(arg0, arg1);
 	}
 	
 	@Override
-	public String evaluate() {
+	public String evaluate() throws RuntimeErrorException {
 		// TODO Auto-generated method stub
 		ArrayList<Expression> children = getChildren();
 		BigDecimal child1Decimal = new BigDecimal(children.get(0).evaluate());
 		BigDecimal child2Decimal = new BigDecimal(children.get(1).evaluate());
-		return child1Decimal.pow(child2Decimal.intValue()).toString();
+		return child1Decimal.add(child2Decimal.negate()).toString();
 	}
 
 }

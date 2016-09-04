@@ -1,3 +1,6 @@
+package FormulaParser;
+import Exception.RuntimeErrorException;
+
 
 public class TreeRoot implements Expression {
 
@@ -10,10 +13,10 @@ public class TreeRoot implements Expression {
 	}
 	
 	@Override
-	public String evaluate() {
+	public String evaluate() throws RuntimeErrorException {
 		// TODO Auto-generated method stub
 		String unit = child2.evaluate();
-		if (unit.equals("void")) {
+		if (unit.equals("void^0")) {
 			unit = "";
 		} else {
 			unit = "[" + unit + "]";

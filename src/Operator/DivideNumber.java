@@ -1,14 +1,18 @@
+package Operator;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class DevideNumber extends Operator {
+import Exception.RuntimeErrorException;
+import FormulaParser.Expression;
 
-	public DevideNumber(Expression arg0, Expression arg1) {
+public class DivideNumber extends Operator {
+
+	public DivideNumber(Expression arg0, Expression arg1) {
 		setChildren(arg0, arg1);
 	}
 	
 	@Override
-	public String evaluate() {
+	public String evaluate() throws RuntimeErrorException {
 		// TODO Auto-generated method stub
 		ArrayList<Expression> children = getChildren();
 		BigDecimal child1Decimal = new BigDecimal(children.get(0).evaluate());

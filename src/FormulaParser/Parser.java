@@ -1,7 +1,25 @@
+package FormulaParser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
+
+import Exception.SyntaxErrorException;
+import Factor.PowNumber;
+import Factor.PowUnit;
+import Factor.SqrtNumber;
+import Factor.SqrtUnit;
+import Factor.UnitFactor;
+import Operator.DivideNumber;
+import Operator.DivideUnit;
+import Operator.MinusNumber;
+import Operator.MinusUnit;
+import Operator.PluseNumber;
+import Operator.PluseUnit;
+import Operator.TimeNumber;
+import Operator.TimeUnit;
+import Termination.Number;
+import Termination.Unit;
 
 public class Parser {
 	
@@ -16,14 +34,14 @@ public class Parser {
 		this.program = new ArrayList<String>(Arrays.asList(arg0.split("\\s+")));
 	}
 	
-	public Expression compile() {
+	public Expression compile() throws SyntaxErrorException {
 		this.programCounter = program.listIterator();
 		List<Expression> array = createExpression();
 		Expression treeRoot = new TreeRoot(array.get(0), array.get(1));
 		return treeRoot;
 	}
 	
-	private List<Expression> createNumber() {
+	private List<Expression> createNumber() throws SyntaxErrorException {
 		String str = programCounter.next();
 		String[] array = str.split("\\[");
 		List<String> parsedUnit;
@@ -40,7 +58,7 @@ public class Parser {
 		return ans;
 	}
 	
-	private List<Expression> createExpression() {
+	private List<Expression> createExpression() throws SyntaxErrorException {
 		List<Expression> x = createTerm();
 		while (programCounter.hasNext()) {
 			String str = programCounter.next();
@@ -64,7 +82,7 @@ public class Parser {
 		return x;
 	}
 	
-	private List<Expression> createTerm() {
+	private List<Expression> createTerm() throws SyntaxErrorException {
 		List<Expression> x = createFactor();
 		while (programCounter.hasNext()) {
 			String str = programCounter.next();
@@ -77,8 +95,8 @@ public class Parser {
 			} else if (str.equals("/")) {
 				List<Expression> t = createFactor();
 				List<Expression> e = new ArrayList<Expression>();
-				e.add(new DevideNumber(x.get(0), t.get(0)));
-				e.add(new DevideUnit(x.get(1), t.get(1)));
+				e.add(new DivideNumber(x.get(0), t.get(0)));
+				e.add(new DivideUnit(x.get(1), t.get(1)));
 				x = e;
 			} else if (str.equals("^")) {
 				List<Expression> t = createFactor();
@@ -99,11 +117,11 @@ public class Parser {
 		List<String> parsedUnit = UnitParser.evaluatePrefix("1", unit);
 		List<Expression> answer = new ArrayList<Expression>();
 		answer.add(new TimeNumber(arg0.get(0), new Number(parsedUnit.get(0))));
-		answer.add(new Unit(unit));
+		answer.add(new UnitFactor(arg0.get(1), new Unit(parsedUnit.get(1))));
 		return answer;
 	}
 	
-	private List<Expression> createFactor() {
+	private List<Expression> createFactor() throws SyntaxErrorException {
 		String str = programCounter.next();
 		if (str.matches(".*\\d.*")) {
 			programCounter.previous();
@@ -117,23 +135,24 @@ public class Parser {
 				if (next.matches("^\\)\\[.*")) {
 					e = createUnit(e, next);
 				} else if (!next.equals(")")) {
-					System.out.println("error");
+					throw new SyntaxErrorException("Missing closing parenthesis.");
 				}
 			} else if (str.equals("sqrt(")) {
-				Expression t = new SqrtNumber(e.get(0));
-				e.set(0, t);
+				ArrayList<Expression> t = new ArrayList<Expression>();
+				t.add(new SqrtNumber(e.get(0)));
+				t.add(new SqrtUnit(e.get(1)));
+				e = t;
 				if (next.matches("^\\)\\[.*")) {
 					e = createUnit(e, next);
 				} else if (!next.equals(")")) {
-					System.out.println("error!");
+					throw new SyntaxErrorException("Missing closing parenthesis.");
 				}
 			} else {
-				System.out.println("command not found : " + str.replaceAll("\\(", ""));
+				throw new SyntaxErrorException("Command not found : " + str.replaceAll("\\(", ""));
 			} 
 			return e;
 		} else {
-			System.out.println("error");
-			return null;
+			throw new SyntaxErrorException("Missing right-hand side value.");
 		}
 	}
 		

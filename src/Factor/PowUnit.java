@@ -1,5 +1,6 @@
 package Factor;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +21,12 @@ public class PowUnit extends Operator {
 		// TODO Auto-generated method stub
 		List<Expression> children = getChildren();
 		Map<String, String> unitMap = UnitParser.createUnitMap(children.get(0).evaluate());
+		Map<String, String> newUnitMap = new HashMap<String, String>();
 		String index = children.get(1).evaluate();
 		for (String key : unitMap.keySet()) {
-			unitMap.replace(key, new BigDecimal(unitMap.get(key)).multiply(new BigDecimal(index)).toString());
+			newUnitMap.put(key, new BigDecimal(unitMap.get(key)).multiply(new BigDecimal(index)).toString());
 		}
-		return UnitParser.createUnitString(unitMap);
+		return UnitParser.createUnitString(newUnitMap);
 	}
 
 }

@@ -22,6 +22,7 @@ public class DivideUnit extends Operator {
 		ArrayList<Expression> children = getChildren();
 		Map<String, String> unitMap1 = UnitParser.createUnitMap(children.get(0).evaluate());
 		Map<String, String> unitMap2 = UnitParser.createUnitMap(children.get(1).evaluate());
+		Map<String, String> newUnitMap2 = new HashMap<String, String>();
 		Map<String, String> bondedUnit = new HashMap<String, String>();
 		Set<String> keySet = unitMap2.keySet();
 		for (String str : keySet) {
@@ -29,14 +30,13 @@ public class DivideUnit extends Operator {
 			if (tmp != null) {
 				String num = new BigDecimal(tmp).add(new BigDecimal(unitMap2.get(str)).negate()).toString();
 				unitMap1.remove(str);
-				unitMap2.remove(str);
 				if (!num.equals("0")) bondedUnit.put(str, num);
 			} else {
-				unitMap2.replace(str, new BigDecimal(unitMap2.get(str)).negate().toString());
+				newUnitMap2.put(str, new BigDecimal(unitMap2.get(str)).negate().toString());
 			}
 		}
 		bondedUnit.putAll(unitMap1);
-		bondedUnit.putAll(unitMap2);
+		bondedUnit.putAll(newUnitMap2);
 		return UnitParser.createUnitString(bondedUnit);
 	}
 

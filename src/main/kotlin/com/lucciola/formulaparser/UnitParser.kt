@@ -1,6 +1,6 @@
 package com.lucciola.formulaparser
 
-import java.math.BigDecimal;
+import java.math.BigDecimal
 
 abstract class UnitParser {
 
@@ -19,7 +19,7 @@ abstract class UnitParser {
             "μ" to "-6",
             "n" to "-9",
             "p" to "-12"
-    );
+    )
 
     fun parsePrefix(arg0: String): Array<String> {
         val unit: List<String> = arg0.split("_")
@@ -52,6 +52,7 @@ abstract class UnitParser {
         return ans
     }
 
+    // singleton methods
     companion object {
         fun createUnitMap(arg0: String): Map<String, String>  {
             val devidedUnit: List<String> = arg0.split("'")

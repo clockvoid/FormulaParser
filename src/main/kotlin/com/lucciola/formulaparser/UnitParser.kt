@@ -46,7 +46,7 @@ abstract class UnitParser {
             number = BigDecimal(number).add(BigDecimal(array[0])).toString()
             unit += (if (unit.isNotEmpty()) "'" else "") + array[1]
         }
-        val ans: ArrayList<String> = ArrayList<String>()
+        val ans: ArrayList<String> = ArrayList()
         ans.add(BigDecimal(arg0).multiply(BigDecimal(Math.pow(10.0, number.toDouble()))).toString()).toString()
         ans.add(unit)
         return ans
@@ -60,12 +60,12 @@ abstract class UnitParser {
             for (str: String in devidedUnit) {
                 val array: List<String> = str.split("\\^")
                 if (array.size == 1) {
-                    unitMap.put(array[0], "1")
+                    unitMap[array[0]] = "1"
                 } else {
-                    unitMap.put(array[0], array[1])
+                    unitMap[array[0]] = array[1]
                 }
             }
-            return unitMap;
+            return unitMap
         }
 
         fun createUnitString(arg0: HashMap<String, String>): String {
@@ -73,7 +73,7 @@ abstract class UnitParser {
             for (set: Map.Entry<String, String> in arg0.entries) {
                 unitString += set.key + (if (set.value == "1") "" else "^" + (if (set.key == "void") "0" else set.value)) + "'"
             }
-            if (unitString.equals(""))unitString = "void^0"
+            if (unitString == "")unitString = "void^0"
             return unitString.replace("'$", "")
         }
     }

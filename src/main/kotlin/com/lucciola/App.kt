@@ -4,7 +4,6 @@ fun main(args: Array<String>) {
 }
 
 /*
- * TODO factor: Sqrt, UnitFactor
  * TODO formulaparser: BigDecimalPlus, Parser, TreeRoot
  * TODO operator: all of them
  * TODO termination: all

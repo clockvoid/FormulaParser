@@ -4,9 +4,9 @@ import com.lucciola.exception.RuntimeErrorException;
 import com.lucciola.formulaparser.Expression;
 
 
-class SqrtNumber: Factor() {
+class SqrtNumber: Factor {
 
-	fun SqrtNumber(arg0: Expression) {
+	constructor(arg0: Expression) {
 		this.child = arg0
 	}
 

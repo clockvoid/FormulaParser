@@ -7,12 +7,7 @@ import com.lucciola.formulaparser.Expression
 import com.lucciola.formulaparser.UnitParser
 import com.lucciola.operator.Operator
 
-
-class PowUnit: Operator() {
-
-	fun PowUnit(arg0: Expression, arg1: Expression) {
-		setChildren(arg0, arg1)
-	}
+class PowUnit(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
 
     @Throws(RuntimeErrorException::class)
 	override fun evaluate(): String {

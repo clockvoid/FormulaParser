@@ -4,11 +4,7 @@ import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
 import com.lucciola.operator.Operator
 
-class PowNumber: Operator() {
-
-    fun PowNumber( arg0: Expression, arg1: Expression) {
-        setChildren(arg0, arg1)
-    }
+class PowNumber(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
 
     @Throws(RuntimeErrorException::class)
     override fun evaluate(): String {

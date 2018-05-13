@@ -6,9 +6,9 @@ import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
 import com.lucciola.formulaparser.UnitParser
 
-class SqrtUnit: Factor() {
+class SqrtUnit: Factor {
 
-    fun SqrtUnit(arg0: Expression) {
+    constructor(arg0: Expression) {
         this.child = arg0
     }
 

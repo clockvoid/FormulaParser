@@ -7,7 +7,7 @@ import com.lucciola.formulaparser.Expression;
 abstract class Factor: Expression {
 
     lateinit var child: Expression
-        protected set;
+        protected set
 
     @Throws(RuntimeErrorException::class)
     abstract override fun evaluate(): String

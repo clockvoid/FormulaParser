@@ -5,17 +5,20 @@ import java.util.ArrayList
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
 
-
-abstract class Operator: Expression {
+abstract class Operator constructor(arg0: Expression, arg1: Expression) : Expression {
 
     private lateinit var child1: Expression
     private lateinit var child2: Expression
 
+    init {
+        this.setChildren(arg0, arg1)
+    }
+
     fun getChildren(): ArrayList<Expression> {
-        var children: ArrayList<Expression> = ArrayList()
+        val children: ArrayList<Expression> = ArrayList()
         children.add(child1)
         children.add(child2)
-        return children;
+        return children
     }
 
     fun setChildren(arg0: Expression, arg1: Expression) {

@@ -6,7 +6,6 @@ import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
 import com.lucciola.formulaparser.UnitParser
 
-
 class TimeUnit(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
 
     @Throws(RuntimeErrorException::class)
@@ -17,17 +16,29 @@ class TimeUnit(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
         val bondedUnit: HashMap<String, String> = hashMapOf()
         val keySet: Set<String> = unitMap1.keys
         for (str: String in keySet) {
-        val tmp: String? = unitMap2[str]
-        if (tmp != null) {
-            val num: String = BigDecimal(tmp).add(BigDecimal(unitMap1[str])).toString()
-            unitMap1 = unitMap1.filterKeys { s -> s != str }
-            unitMap2 = unitMap2.filterKeys { s -> s != str }
-            if (num != "0") bondedUnit.putAll(mapOf(str to num))
+            val tmp: String? = unitMap2[str]
+            if (tmp != null) {
+                val num: String = BigDecimal(tmp).add(BigDecimal(unitMap1[str])).toString()
+                unitMap1 = unitMap1.filterKeys { s -> s != str }
+                unitMap2 = unitMap2.filterKeys { s -> s != str }
+                if (num != "0") bondedUnit.putAll(mapOf(str to num))
+            }
         }
-    }
         bondedUnit.putAll(unitMap1)
         bondedUnit.putAll(unitMap2)
         return UnitParser.createUnitString(bondedUnit)
+    }
+
+}
+
+class TimeNumber(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
+
+    @Throws(RuntimeErrorException::class)
+    override fun evaluate(): String {
+        val children: ArrayList<Expression> = getChildren()
+        val child1Decimal = BigDecimal(children[0].evaluate())
+        val child2Decimal = BigDecimal(children[1].evaluate())
+        return child1Decimal.multiply(child2Decimal).toString()
     }
 
 }

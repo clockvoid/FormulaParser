@@ -20,3 +20,13 @@ class SqrtUnit(arg0: Expression) : Factor(arg0) {
     }
 
 }
+
+class SqrtNumber(arg0: Expression) : Factor(arg0) {
+
+    @Throws(RuntimeErrorException::class)
+    override fun evaluate(): String {
+        val num: Double = this.child.evaluate().toDouble()
+        return Math.sqrt(num).toString()
+    }
+
+}

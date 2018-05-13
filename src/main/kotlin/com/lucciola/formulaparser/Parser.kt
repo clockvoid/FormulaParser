@@ -44,8 +44,8 @@ class Parser(arg0: String) {
             if (str == "+") {
                 val t: List<Expression> = createTerm()
                 var e: List<Expression> = ArrayList()
-                e += listOf(PluseNumber(x[0], t[0]))
-                e += listOf(PluseUnit(x[1], t[1]))
+                e += listOf(PlusNumber(x[0], t[0]))
+                e += listOf(PlusUnit(x[1], t[1]))
                 x = e
             } else if (str == "-") {
                 val t: List<Expression> = createTerm()

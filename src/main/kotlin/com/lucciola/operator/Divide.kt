@@ -33,7 +33,7 @@ class DivideUnit(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
             val tmp: String? = unitMap1[str]
             if (tmp != null) {
                 val num: String = BigDecimal(tmp).add(BigDecimal(unitMap2[str]).negate()).toString()
-                unitMap1 = unitMap1.filterKeys{ s -> s != str }
+                unitMap1 = unitMap1.filterKeys { s -> s != str }
                 if (num != "0")
                     bondedUnit[str] = num
             } else {

@@ -3,13 +3,12 @@ package com.lucciola.factor
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
 
-class UnitFactor: Factor {
+class UnitFactor(arg0: Expression,  arg1: Expression): Factor() {
 
-    private lateinit var outSideUnit: Expression
+    private var outSideUnit: Expression = arg1
 
-    constructor(arg0: Expression,  arg1: Expression) {
+    init {
         this.child = arg0
-        outSideUnit = arg1
     }
 
     @Throws(RuntimeErrorException::class)

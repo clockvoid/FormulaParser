@@ -1,154 +1,140 @@
 package com.lucciola.formulaparser
 
 import com.lucciola.exception.SyntaxErrorException
-import com.lucciola.factor.PowNumber
-import com.lucciola.factor.PowUnit
-import com.lucciola.factor.SqrtNumber
-import com.lucciola.factor.SqrtUnit
-import com.lucciola.factor.UnitFactor
-import com.lucciola.operator.DivideNumber
-import com.lucciola.operator.DivideUnit
-import com.lucciola.operator.MinusNumber
-import com.lucciola.operator.MinusUnit
-import com.lucciola.operator.PluseNumber
-import com.lucciola.operator.PluseUnit
-import com.lucciola.operator.TimeNumber
-import com.lucciola.operator.TimeUnit
-import Termination.Number;
-import Termination.Unit;
+import com.lucciola.factor.*
+import com.lucciola.operator.*
+import com.lucciola.termination.Number
+import com.lucciola.termination.Unit
 
-public class Parser {
+class Parser(arg0: String) {
 
-    private ArrayList<String> program;
-    private ListIterator<String> programCounter;
+    private var splitProgram: ArrayList<String> = ArrayList(arg0.split("\\s+"))
+    private lateinit var programCounter: ListIterator<String>
 
-    public Parser(String arg0) {
-        this.program = new ArrayList<String>(Arrays.asList(arg0.split("\\s+")));
+    @Throws(SyntaxErrorException::class)
+    fun compile(): Expression {
+        this.programCounter = this.splitProgram.listIterator()
+        val array: List<Expression> = this.createExpression()
+        return TreeRoot(array[0], array[1])
     }
 
-    public void setProgram(String arg0) {
-        this.program = new ArrayList<String>(Arrays.asList(arg0.split("\\s+")));
-    }
-
-    public Expression compile() throws SyntaxErrorException {
-        this.programCounter = program.listIterator();
-        List<Expression> array = createExpression();
-        Expression treeRoot = new TreeRoot(array.get(0), array.get(1));
-        return treeRoot;
-    }
-
-    private List<Expression> createNumber() throws SyntaxErrorException {
-        String str = programCounter.next();
-        String[] array = str.split("\\[");
-        List<String> parsedUnit;
-        if (array.length == 1) {
-            parsedUnit = UnitParser.evaluatePrefix(str, "void^0");
+    @Throws(SyntaxErrorException::class)
+    private fun createNumber(): List<Expression> {
+        val str: String = this.programCounter.next()
+        val array: List<String> = str.split("\\[")
+        val parsedUnit: List<String>
+        parsedUnit = if (array.size == 1) {
+            UnitParser.evaluatePrefix(str, "void^0")
         } else {
-            parsedUnit = UnitParser.evaluatePrefix(array[0], array[1].replaceAll("\\]", ""));
+            UnitParser.evaluatePrefix(array[0], array[1].replace(Regex("\\]"), ""))
         }
-        Expression n = new Number(parsedUnit.get(0));
-        Expression u = new Unit(parsedUnit.get(1));
-        List<Expression> ans = new ArrayList<Expression>();
-        ans.add(n);
-        ans.add(u);
-        return ans;
+        val n: Expression = Number(parsedUnit[0])
+        val u: Expression = Unit(parsedUnit[1])
+        var ans: List<Expression> = ArrayList()
+        ans += arrayListOf(n)
+        ans += arrayListOf(u)
+        return ans
     }
 
-    private List<Expression> createExpression() throws SyntaxErrorException {
-        List<Expression> x = createTerm();
+    @Throws(SyntaxErrorException::class)
+    private fun createExpression(): List<Expression> {
+        var x: List<Expression> = this.createTerm()
+        while (this.programCounter.hasNext()) {
+            val str: String = programCounter.next()
+            if (str == "+") {
+                val t: List<Expression> = createTerm()
+                var e: List<Expression> = ArrayList()
+                e += listOf(PluseNumber(x[0], t[0]))
+                e += listOf(PluseUnit(x[1], t[1]))
+                x = e
+            } else if (str == "-") {
+                val t: List<Expression> = createTerm()
+                var e: List<Expression> = ArrayList()
+                e += listOf(MinusNumber(x[0], t[0]))
+                e += listOf(MinusUnit(x[1], t[1]))
+                x = e
+            } else {
+                programCounter.previous()
+                break
+            }
+        }
+        return x
+    }
+
+    @Throws(SyntaxErrorException::class)
+    private fun createTerm(): List<Expression> {
+        var x: List<Expression> = createFactor()
         while (programCounter.hasNext()) {
-            String str = programCounter.next();
-            if (str.equals("+")) {
-                List<Expression> t = createTerm();
-                List<Expression> e = new ArrayList<Expression>();
-                e.add(new PluseNumber(x.get(0), t.get(0)));
-                e.add(new PluseUnit(x.get(1), t.get(1)));
-                x = e;
-            } else if (str.equals("-")) {
-                List<Expression> t = createTerm();
-                List<Expression> e = new ArrayList<Expression>();
-                e.add(new MinusNumber(x.get(0), t.get(0)));
-                e.add(new MinusUnit(x.get(1), t.get(1)));
-                x = e;
+            val str: String = programCounter.next()
+            if (str == "*") {
+                val t: List<Expression> = createFactor()
+                var e: List<Expression> = ArrayList()
+                e += listOf(TimeNumber(x[0], t[0]))
+                e += listOf(TimeUnit(x[1], t[1]))
+                x = e
+            } else if (str == "/") {
+                val t: List<Expression> = createFactor()
+                var e: List<Expression> = ArrayList()
+                e += listOf(DivideNumber(x[0], t[0]))
+                e += listOf(DivideUnit(x[1], t[1]))
+                x = e
+            } else if (str == "^") {
+                val t: List<Expression> = createFactor()
+                var e: List<Expression> = ArrayList()
+                e += listOf(PowNumber(x[0], t[0]))
+                e += listOf(PowUnit(x[1], t[0]))
+                x = e
             } else {
-                programCounter.previous();
-                break;
+                programCounter.previous()
+                break
             }
         }
-        return x;
+        return x
     }
 
-    private List<Expression> createTerm() throws SyntaxErrorException {
-        List<Expression> x = createFactor();
-        while (programCounter.hasNext()) {
-            String str = programCounter.next();
-            if (str.equals("*")) {
-                List<Expression> t = createFactor();
-                List<Expression> e = new ArrayList<Expression>();
-                e.add(new TimeNumber(x.get(0), t.get(0)));
-                e.add(new TimeUnit(x.get(1), t.get(1)));
-                x = e;
-            } else if (str.equals("/")) {
-                List<Expression> t = createFactor();
-                List<Expression> e = new ArrayList<Expression>();
-                e.add(new DivideNumber(x.get(0), t.get(0)));
-                e.add(new DivideUnit(x.get(1), t.get(1)));
-                x = e;
-            } else if (str.equals("^")) {
-                List<Expression> t = createFactor();
-                List<Expression> e = new ArrayList<Expression>();
-                e.add(new PowNumber(x.get(0), t.get(0)));
-                e.add(new PowUnit(x.get(1), t.get(0)));
-                x = e;
-            } else {
-                programCounter.previous();
-                break;
+    private fun createUnit(arg0: List<Expression>, arg1: String): List<Expression> {
+        val unit: String = arg1.replace(Regex("(\\)\\[|\\])"), "")
+        val parsedUnit: List<String> = UnitParser.evaluatePrefix("1", unit)
+        var answer: List<Expression> = ArrayList()
+        answer += listOf(TimeNumber(arg0[0], Number(parsedUnit[0])))
+        answer += listOf(UnitFactor(arg0[1], Unit(parsedUnit[1])))
+        return answer
+    }
+
+    @Throws(SyntaxErrorException::class)
+    private fun createFactor(): List<Expression> {
+        val str: String = programCounter.next()
+        when {
+            str.matches(Regex(".*\\d.*")) -> {
+                programCounter.previous()
+                return createNumber()
             }
-        }
-        return x;
-    }
-
-    private List<Expression> createUnit(List<Expression> arg0, String arg1) {
-        String unit = arg1.replaceAll("(\\)\\[|\\])", "");
-        List<String> parsedUnit = UnitParser.evaluatePrefix("1", unit);
-        List<Expression> answer = new ArrayList<Expression>();
-        answer.add(new TimeNumber(arg0.get(0), new Number(parsedUnit.get(0))));
-        answer.add(new UnitFactor(arg0.get(1), new Unit(parsedUnit.get(1))));
-        return answer;
-    }
-
-    private List<Expression> createFactor() throws SyntaxErrorException {
-        String str = programCounter.next();
-        if (str.matches(".*\\d.*")) {
-            programCounter.previous();
-            List<Expression> e = createNumber();
-            return e;
-        } else if (programCounter.hasNext()) {
-            List<Expression> e = createExpression(); //再帰下がる
-            // 下がった再帰から出てきたところ.ここで,はじめのカッコと閉じカッコの部分を確認する.
-            String next = programCounter.next();
-            if (str.equals("(")) {
-                if (next.matches("^\\)\\[.*")) {
-                    e = createUnit(e, next);
-                } else if (!next.equals(")")) {
-                    throw new SyntaxErrorException("Missing closing parenthesis.");
+            programCounter.hasNext() -> {
+                var e: List<Expression> = createExpression() //再帰下がる
+                // 下がった再帰から出てきたところ.ここで,はじめのカッコと閉じカッコの部分を確認する.
+                val next: String = programCounter.next()
+                if (str == "(") {
+                    if (next.matches(Regex("^\\)\\[.*"))) {
+                        e = createUnit(e, next)
+                    } else if (next != ")") {
+                        throw SyntaxErrorException("Missing closing parenthesis.")
+                    }
+                } else if (str == "sqrt(") {
+                    val t: ArrayList<Expression> = ArrayList()
+                    t.add(SqrtNumber(e[0]))
+                    t.add(SqrtUnit(e[1]))
+                    e = t
+                    if (next.matches(Regex("^\\)\\[.*"))) {
+                        e = createUnit(e, next)
+                    } else if (next != ")") {
+                        throw SyntaxErrorException("Missing closing parenthesis.")
+                    }
+                } else {
+                    throw SyntaxErrorException("Command not found : " + str.replace(Regex("\\("), ""))
                 }
-            } else if (str.equals("sqrt(")) {
-                ArrayList<Expression> t = new ArrayList<Expression>();
-                t.add(new SqrtNumber(e.get(0)));
-                t.add(new SqrtUnit(e.get(1)));
-                e = t;
-                if (next.matches("^\\)\\[.*")) {
-                    e = createUnit(e, next);
-                } else if (!next.equals(")")) {
-                    throw new SyntaxErrorException("Missing closing parenthesis.");
-                }
-            } else {
-                throw new SyntaxErrorException("Command not found : " + str.replaceAll("\\(", ""));
+                return e
             }
-            return e;
-        } else {
-            throw new SyntaxErrorException("Missing right-hand side value.");
+            else -> throw SyntaxErrorException("Missing right-hand side value.")
         }
     }
 

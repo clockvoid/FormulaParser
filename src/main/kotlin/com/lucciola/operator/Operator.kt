@@ -21,7 +21,7 @@ abstract class Operator constructor(arg0: Expression, arg1: Expression) : Expres
         return children
     }
 
-    fun setChildren(arg0: Expression, arg1: Expression) {
+    private fun setChildren(arg0: Expression, arg1: Expression) {
         this.child1 = arg0
         this.child2 = arg1
     }

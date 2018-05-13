@@ -3,10 +3,9 @@ package com.lucciola.factor
 import com.lucciola.exception.RuntimeErrorException;
 import com.lucciola.formulaparser.Expression;
 
+abstract class Factor protected constructor(arg0: Expression): Expression {
 
-abstract class Factor: Expression {
-
-    lateinit var child: Expression
+    var child: Expression = arg0
         protected set
 
     @Throws(RuntimeErrorException::class)

@@ -5,7 +5,7 @@ import java.util.ArrayList
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
 
-abstract class Operator constructor(arg0: Expression, arg1: Expression) : Expression {
+abstract class Operator protected constructor(arg0: Expression, arg1: Expression) : Expression {
 
     private lateinit var child1: Expression
     private lateinit var child2: Expression

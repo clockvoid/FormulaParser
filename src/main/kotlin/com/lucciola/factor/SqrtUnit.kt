@@ -1,16 +1,12 @@
 package com.lucciola.factor
 
-import java.math.BigDecimal;
+import java.math.BigDecimal
 
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
 import com.lucciola.formulaparser.UnitParser
 
-class SqrtUnit: Factor {
-
-    constructor(arg0: Expression) {
-        this.child = arg0
-    }
+class SqrtUnit(arg0: Expression) : Factor(arg0) {
 
     @Throws(RuntimeErrorException::class)
     override fun evaluate(): String {

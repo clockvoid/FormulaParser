@@ -1,8 +1,7 @@
-package com.lucciola.factor
+package com.lucciola.operator
 
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
-import com.lucciola.operator.Operator
 
 class PowNumber(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
 

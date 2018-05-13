@@ -1,4 +1,4 @@
-package com.lucciola.factor
+package com.lucciola.operator
 
 import java.math.BigDecimal
 

@@ -19,7 +19,7 @@ abstract class UnitParser {
                 "d" to "-1",
                 "c" to "-2",
                 "m" to "-3",
-                "μ" to "-6",
+                "u" to "-6",
                 "n" to "-9",
                 "p" to "-12"
         )
@@ -56,9 +56,9 @@ abstract class UnitParser {
         }
 
         fun createUnitMap(arg0: String): Map<String, String>  {
-            val devidedUnit: List<String> = arg0.split("'")
+            val dividedUnit: List<String> = arg0.split("'")
             val unitMap: HashMap<String, String> = HashMap()
-            for (str: String in devidedUnit) {
+            for (str: String in dividedUnit) {
                 val array: List<String> = str.split("\\^")
                 if (array.size == 1) {
                     unitMap[array[0]] = "1"

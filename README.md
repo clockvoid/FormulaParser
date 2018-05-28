@@ -2,6 +2,8 @@
 library for calculator for numbers with units
 
 ## Description
+Now, it become a Kotlin with Gradle project!🎉
+
 This is a library to calculate with units.
 To make calculation, give `Parser` object a string valued numerical expression and call `compile()` function.
 You will get `Expression` object and that's `evaluate()` Function will return the result by string.

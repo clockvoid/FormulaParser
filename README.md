@@ -2,15 +2,15 @@
 library for calculator for numbers with units
 
 ## Description
-リポジトリの説明にある通り,単位付きの計算ができる電卓を作るためのライブラリです.  
-Parserオブジェクトに式を文字列で渡して,compile()メソッドを呼び出して帰ってきたExpressionオブジェクトのevaluate()を呼び出すだけで,
-計算結果を文字列で返してくれます.
+This is a library to calculate with units.
+To make calculation, give `Parser` object a string valued numerical expression and call `compile()` function.
+You will get `Expression` object and that's `evaluate()` Function will return the result by string.
 
 ## Usage
-コードをダウンロードしてIDEでプロジェクトを作り,Jarにまとめるなり,CLIでそれをするなり,どんな使い方でもできます.
+At this time, you have to `clone` this repository to your local and make Jar or something.
 
 ## Test
-なぜTestディレクトリが無いのか,不思議に思う方がいらっしゃるかもしれません.理由は簡単,main()行っているからです.最悪ですね.善処します.
+At this time, there are no tests. This is terrible. I do will make it better.
 
 ## Design
-基調となっているデザインパターンはInterpreterPatternです.再帰下降構文解析を使っているので,当然ですね.
+I used Recursive Descent Parsing.

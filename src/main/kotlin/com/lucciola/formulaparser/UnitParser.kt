@@ -24,7 +24,7 @@ abstract class UnitParser {
                 "p" to "-12"
         )
 
-        private fun parsePrefix(arg0: String): Array<String> {
+        fun parsePrefix(arg0: String): Array<String> {
             val unit: List<String> = arg0.split("_")
             return if (unit.size == 1) {
                 arrayOf("0", arg0)
@@ -59,7 +59,7 @@ abstract class UnitParser {
             val dividedUnit: List<String> = arg0.split("'")
             val unitMap: HashMap<String, String> = HashMap()
             for (str: String in dividedUnit) {
-                val array: List<String> = str.split("\\^")
+                val array: List<String> = str.split("^")
                 if (array.size == 1) {
                     unitMap[array[0]] = "1"
                 } else {

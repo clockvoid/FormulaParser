@@ -15,7 +15,7 @@ class PowUnit(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
         val newUnitMap: HashMap<String, String> = HashMap()
         val index: String = children[1].evaluate()
         for (key: String in unitMap.keys) {
-            newUnitMap.put(key, BigDecimal(unitMap[key]).multiply(BigDecimal(index)).toString())
+            newUnitMap[key] = BigDecimal(unitMap[key]).multiply(BigDecimal(index)).toString()
         }
         return UnitParser.createUnitString(newUnitMap)
     }

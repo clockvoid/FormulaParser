@@ -5,17 +5,8 @@ import org.junit.Test
 import com.lucciola.termination.Number
 import com.lucciola.termination.Unit
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Before
-import org.junit.rules.ExpectedException
 
 class MinusTest {
-
-    lateinit var thrown: ExpectedException
-
-    @Before
-    fun init() {
-        thrown = ExpectedException.none()
-    }
 
     @Test
     fun minusNumberTest() {
@@ -36,9 +27,11 @@ class MinusTest {
     fun minusUnitExceptionTest() {
         val unit3 = Unit("sec")
         val unit2 = Unit("m")
-        thrown.expect(RuntimeErrorException::class.java)
-        thrown.expectMessage("It does not match unit ${unit2.evaluate()} and ${unit3.evaluate()}")
 
-        MinusUnit(unit2, unit3)
+        try {
+            MinusUnit(unit2, unit3).evaluate()
+        } catch (e: RuntimeErrorException) {
+            assertThat(e.message).isEqualTo("It does not match unit ${unit2.evaluate()} and ${unit3.evaluate()}.")
+        }
     }
 }

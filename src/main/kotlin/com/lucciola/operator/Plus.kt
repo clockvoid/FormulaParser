@@ -17,7 +17,7 @@ class PlusUnit(arg0: Unit, arg1: Unit): Operator(arg0, arg1) {
         if (unit1 == unit2) {
             return unit1
         } else {
-            throw RuntimeException("It does not match unit $unit1 and $unit2.")
+            throw RuntimeErrorException("It does not match unit $unit1 and $unit2.")
         }
     }
 

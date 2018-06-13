@@ -3,7 +3,6 @@ package com.lucciola.termination
 import com.lucciola.exception.SyntaxErrorException
 import com.lucciola.formulaparser.Expression
 
-
 class Number(arg0: String): Termination(arg0) {
 
     init {
@@ -12,6 +11,7 @@ class Number(arg0: String): Termination(arg0) {
         }
     }
 
+    @Throws(SyntaxErrorException::class)
     constructor(arg0: Expression): this(arg0.evaluate())
 
     override fun evaluate(): String {

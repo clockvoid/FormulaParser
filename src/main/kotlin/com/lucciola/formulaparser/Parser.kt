@@ -44,14 +44,14 @@ class Parser(arg0: String) {
             if (str == "+") {
                 val t: List<Expression> = createTerm()
                 var e: List<Expression> = ArrayList()
-                e += listOf(PlusNumber(x[0], t[0]))
-                e += listOf(PlusUnit(x[1], t[1]))
+                e += listOf(PlusNumber(Number(x[0]), Number(t[0])))
+                e += listOf(PlusUnit(Unit(x[1]), Unit(t[1])))
                 x = e
             } else if (str == "-") {
                 val t: List<Expression> = createTerm()
                 var e: List<Expression> = ArrayList()
-                e += listOf(MinusNumber(x[0], t[0]))
-                e += listOf(MinusUnit(x[1], t[1]))
+                e += listOf(MinusNumber(Number(x[0]), Number(t[0])))
+                e += listOf(MinusUnit(Unit(x[1]), Unit(t[1])))
                 x = e
             } else {
                 programCounter.previous()
@@ -69,20 +69,20 @@ class Parser(arg0: String) {
             if (str == "*") {
                 val t: List<Expression> = createFactor()
                 var e: List<Expression> = ArrayList()
-                e += listOf(TimeNumber(x[0], t[0]))
-                e += listOf(TimeUnit(x[1], t[1]))
+                e += listOf(TimeNumber(Number(x[0]), Number(t[0])))
+                e += listOf(TimeUnit(Unit(x[1]), Unit(t[1])))
                 x = e
             } else if (str == "/") {
                 val t: List<Expression> = createFactor()
                 var e: List<Expression> = ArrayList()
-                e += listOf(DivideNumber(x[0], t[0]))
-                e += listOf(DivideUnit(x[1], t[1]))
+                e += listOf(DivideNumber(Number(x[0]), Number(t[0])))
+                e += listOf(DivideUnit(Unit(x[1]), Unit(t[1])))
                 x = e
             } else if (str == "^") {
                 val t: List<Expression> = createFactor()
                 var e: List<Expression> = ArrayList()
-                e += listOf(PowNumber(x[0], t[0]))
-                e += listOf(PowUnit(x[1], t[0]))
+                e += listOf(PowNumber(Number(x[0]), Number(t[0])))
+                e += listOf(PowUnit(Unit(x[1]), Number(t[0])))
                 x = e
             } else {
                 programCounter.previous()
@@ -96,8 +96,8 @@ class Parser(arg0: String) {
         val unit: String = arg1.replace(Regex("(\\)\\[|\\])"), "")
         val parsedUnit: List<String> = UnitParser.evaluatePrefix("1", unit)
         var answer: List<Expression> = ArrayList()
-        answer += listOf(TimeNumber(arg0[0], Number(parsedUnit[0])))
-        answer += listOf(UnitFactor(arg0[1], Unit(parsedUnit[1])))
+        answer += listOf(TimeNumber(Number(arg0[0]), Number(parsedUnit[0])))
+        answer += listOf(UnitFactor(Unit(arg0[1]), Unit(parsedUnit[1])))
         return answer
     }
 

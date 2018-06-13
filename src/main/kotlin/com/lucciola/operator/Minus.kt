@@ -4,8 +4,10 @@ import java.math.BigDecimal
 
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
+import com.lucciola.termination.Number
+import com.lucciola.termination.Unit
 
-class MinusUnit(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
+class MinusUnit(arg0: Unit, arg1: Unit): Operator(arg0, arg1) {
 
     @Throws(RuntimeErrorException::class)
     override fun evaluate(): String {
@@ -21,7 +23,7 @@ class MinusUnit(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
 
 }
 
-class MinusNumber(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
+class MinusNumber(arg0: Number, arg1: Number): Operator(arg0, arg1) {
 
     @Throws(RuntimeErrorException::class)
     override fun evaluate(): String {

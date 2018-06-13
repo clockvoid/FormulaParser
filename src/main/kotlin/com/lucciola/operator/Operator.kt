@@ -4,8 +4,9 @@ import java.util.ArrayList
 
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
+import com.lucciola.termination.Termination
 
-abstract class Operator protected constructor(arg0: Expression, arg1: Expression) : Expression {
+abstract class Operator protected constructor(arg0: Termination, arg1: Termination) : Expression {
 
     private lateinit var child1: Expression
     private lateinit var child2: Expression
@@ -21,7 +22,7 @@ abstract class Operator protected constructor(arg0: Expression, arg1: Expression
         return children
     }
 
-    private fun setChildren(arg0: Expression, arg1: Expression) {
+    private fun setChildren(arg0: Termination, arg1: Termination) {
         this.child1 = arg0
         this.child2 = arg1
     }

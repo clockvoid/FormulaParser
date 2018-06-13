@@ -5,8 +5,10 @@ import java.math.BigDecimal
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
 import com.lucciola.formulaparser.UnitParser
+import com.lucciola.termination.Number
+import com.lucciola.termination.Unit
 
-class TimeUnit(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
+class TimeUnit(arg0: Unit, arg1: Unit): Operator(arg0, arg1) {
 
     @Throws(RuntimeErrorException::class)
     override fun evaluate(): String {
@@ -31,7 +33,7 @@ class TimeUnit(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
 
 }
 
-class TimeNumber(arg0: Expression, arg1: Expression): Operator(arg0, arg1) {
+class TimeNumber(arg0: Number, arg1: Number): Operator(arg0, arg1) {
 
     @Throws(RuntimeErrorException::class)
     override fun evaluate(): String {

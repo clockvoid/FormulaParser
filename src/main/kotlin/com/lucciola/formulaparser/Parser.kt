@@ -8,7 +8,7 @@ import com.lucciola.termination.Unit
 
 class Parser(arg0: String) {
 
-    private var splitProgram: ArrayList<String> = ArrayList(arg0.split("\\s+"))
+    private var splitProgram: ArrayList<String> = ArrayList(arg0.split("\\s+".toRegex()))
     private lateinit var programCounter: ListIterator<String>
 
     @Throws(SyntaxErrorException::class)
@@ -21,12 +21,12 @@ class Parser(arg0: String) {
     @Throws(SyntaxErrorException::class)
     private fun createNumber(): List<Expression> {
         val str: String = this.programCounter.next()
-        val array: List<String> = str.split("\\[")
+        val array: List<String> = str.split("\\[".toRegex())
         val parsedUnit: List<String>
         parsedUnit = if (array.size == 1) {
             UnitParser.evaluatePrefix(str, "void^0")
         } else {
-            UnitParser.evaluatePrefix(array[0], array[1].replace(Regex("\\]"), ""))
+            UnitParser.evaluatePrefix(array[0], array[1].replace(Regex("]"), ""))
         }
         val n: Expression = Number(parsedUnit[0])
         val u: Expression = Unit(parsedUnit[1])
@@ -93,7 +93,7 @@ class Parser(arg0: String) {
     }
 
     private fun createUnit(arg0: List<Expression>, arg1: String): List<Expression> {
-        val unit: String = arg1.replace(Regex("(\\)\\[|\\])"), "")
+        val unit: String = arg1.replace(Regex("(\\)\\[|])"), "")
         val parsedUnit: List<String> = UnitParser.evaluatePrefix("1", unit)
         var answer: List<Expression> = ArrayList()
         answer += listOf(TimeNumber(Number(arg0[0]), Number(parsedUnit[0])))
@@ -114,17 +114,17 @@ class Parser(arg0: String) {
                 // 下がった再帰から出てきたところ.ここで,はじめのカッコと閉じカッコの部分を確認する.
                 val next: String = programCounter.next()
                 if (str == "(") {
-                    if (next.matches(Regex("^\\)\\[.*"))) {
+                    if (next.matches(Regex("^\\)\\[.* $"))) {
                         e = createUnit(e, next)
                     } else if (next != ")") {
                         throw SyntaxErrorException("Missing closing parenthesis.")
                     }
                 } else if (str == "sqrt(") {
                     val t: ArrayList<Expression> = ArrayList()
-                    t.add(SqrtNumber(e[0]))
-                    t.add(SqrtUnit(e[1]))
+                    t.add(SqrtNumber(Number(e[0])))
+                    t.add(SqrtUnit(Unit(e[1])))
                     e = t
-                    if (next.matches(Regex("^\\)\\[.*"))) {
+                    if (next.matches(Regex("^\\)\\[.* $"))) {
                         e = createUnit(e, next)
                     } else if (next != ")") {
                         throw SyntaxErrorException("Missing closing parenthesis.")

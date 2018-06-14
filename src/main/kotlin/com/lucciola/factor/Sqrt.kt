@@ -5,8 +5,10 @@ import java.math.BigDecimal
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
 import com.lucciola.formulaparser.UnitParser
+import com.lucciola.termination.Unit
+import com.lucciola.termination.Number
 
-class SqrtUnit(arg0: Expression) : Factor(arg0) {
+class SqrtUnit(arg0: Unit) : Factor(arg0) {
 
     @Throws(RuntimeErrorException::class)
     override fun evaluate(): String {
@@ -21,7 +23,7 @@ class SqrtUnit(arg0: Expression) : Factor(arg0) {
 
 }
 
-class SqrtNumber(arg0: Expression) : Factor(arg0) {
+class SqrtNumber(arg0: Number) : Factor(arg0) {
 
     @Throws(RuntimeErrorException::class)
     override fun evaluate(): String {

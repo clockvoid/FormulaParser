@@ -2,8 +2,9 @@ package com.lucciola.factor
 
 import com.lucciola.exception.RuntimeErrorException
 import com.lucciola.formulaparser.Expression
+import com.lucciola.termination.Unit
 
-class UnitFactor(arg0: Expression,  arg1: Expression): Factor(arg0) {
+class UnitFactor(arg0: Unit,  arg1: Unit) : Factor(arg0) {
 
     private var outSideUnit: Expression = arg1
 

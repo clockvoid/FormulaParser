@@ -30,7 +30,7 @@ abstract class UnitParser {
                 arrayOf("0", arg0)
             } else {
                 var prefixString: String = unit[0]
-                val array: List<String> = unit[1].split("\\^")
+                val array: List<String> = unit[1].split("^")
                 prefixString =  if (array.size == 1) {
                     prefix[prefixString]!!
                 } else {

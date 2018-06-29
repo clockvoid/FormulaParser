@@ -11,6 +11,7 @@ class UnitParserTest {
     @Test
     fun parsePrefixTest() {
         assertThat(UnitParser.parsePrefix("m")).isEqualTo(arrayOf("0", "m"))
+        assertThat(UnitParser.parsePrefix("k_m^2")).isEqualTo(arrayOf("6", "m^2"))
         assertThat(UnitParser.parsePrefix("k_m")).isEqualTo(arrayOf("3", "m"))
         assertThat(UnitParser.parsePrefix("T_m")).isEqualTo(arrayOf("12", "m"))
         assertThat(UnitParser.parsePrefix("G_m")).isEqualTo(arrayOf("9", "m"))
@@ -38,7 +39,8 @@ class UnitParserTest {
 
     @Test
     fun evaluatePrefixTest() {
-        println(evaluatePrefix("10", "m^2'sec"))
+        assertThat(UnitParser.evaluatePrefix("10", "k_m")).isEqualTo(listOf("10000", "m"))
+        assertThat(UnitParser.evaluatePrefix("10", "k_m^2")).isEqualTo(listOf("10000000", "m^2"))
     }
 
 }

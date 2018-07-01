@@ -6,12 +6,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: build
-          command: ./gradlew build
+          name: makewrap
+          command: ./gradlew wrap
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: test
-          command: ./gradlew test
+          command: ./gradlew build test

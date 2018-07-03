@@ -16,8 +16,11 @@ jobs:
           name: test
           command: ./gradlew test
       - run:
-        name: jacoco
-        command: ./gradlew jacocoTestReport
+          name: jacoco
+          command: ./gradlew jacocoTestReport
+      - save_cache:
+          paths:
+            - ~/build/reports
 general:
   artifacts:
     - "build/reports/jacoco"

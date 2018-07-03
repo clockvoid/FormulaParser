@@ -2,6 +2,7 @@
 .idea
 build
 gradle
+out
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

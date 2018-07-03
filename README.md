@@ -1,5 +1,6 @@
 # FormulaParser
 [![CircleCI](https://circleci.com/gh/clockvoid/FormulaParser.svg?style=svg)](https://circleci.com/gh/clockvoid/FormulaParser)
+[![codecov](https://codecov.io/gh/clockvoid/FormulaParser/branch/master/graph/badge.svg)](https://codecov.io/gh/clockvoid/FormulaParser)
 
 library for calculator for numbers with units
 

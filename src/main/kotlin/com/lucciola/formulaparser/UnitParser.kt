@@ -69,7 +69,7 @@ abstract class UnitParser {
             return unitMap
         }
 
-        fun createUnitString(arg0: HashMap<String, String>): String {
+        fun createUnitString(arg0: Map<String, String>): String {
             var unitString = ""
             for (set: Map.Entry<String, String> in arg0.entries) {
                 unitString += set.key + (if (set.value == "1") "" else "^" + (if (set.key == "void") "0" else set.value)) + "'"

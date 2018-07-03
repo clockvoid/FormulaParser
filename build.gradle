@@ -15,6 +15,7 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'application'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.8
 
@@ -36,3 +37,42 @@ compileTestKotlin {
 }
 
 mainClassName = "com.lucciola.AppKt"
+
+jacoco {
+    toolVersion = "0.8.1"
+}
+
+ext {
+    coverageSourceDirs = 'src/test/kotlin'
+    coverageExcludeFiles = '**/App**'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.5
+            }
+        }
+
+        rule {
+            enabled = false
+            element = 'CLASS'
+            includes = ['org.gradle.*']
+
+            limit {
+                counter = 'LINE'
+                maximum = 0.3
+            }
+        }
+    }
+}
+
+jacocoTestReport {
+    dependsOn "test"
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}

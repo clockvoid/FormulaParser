@@ -15,6 +15,9 @@ jobs:
       - run:
           name: test
           command: ./gradlew test
+      - run:
+        name: jacoco
+        command: ./gradlew jacocoTestReport
 general:
   artifacts:
     - "build/reports/jacoco"

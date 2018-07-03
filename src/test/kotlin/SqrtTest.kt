@@ -19,7 +19,9 @@ class SqrtTest {
     @Test
     fun sqrtUnitTest() {
         val unit = SqrtUnit(Unit("m^2"))
+        val unit1 = SqrtUnit(Unit("m^2'g^2"))
         assertThat(unit.evaluate()).isEqualTo("m")
+        assertThat(unit1.evaluate()).isEqualTo("g'm")
     }
 
 }

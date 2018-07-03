@@ -14,11 +14,14 @@ class SqrtUnit(arg0: Unit) : Factor(arg0) {
     override fun evaluate(): String {
         val child: Expression = this.child
         val unitMap: Map<String, String> = UnitParser.createUnitMap(child.evaluate())
+        var changedUnitMap: Map<String, String> = hashMapOf()
         for (key: String in unitMap.keys) {
             val value: String = BigDecimal(unitMap[key]).divide(BigDecimal("2")).toString()
-            return UnitParser.createUnitString(hashMapOf(key to value))
+            changedUnitMap += hashMapOf(key to value)
+            println(hashMapOf(key to value))
         }
-        return UnitParser.createUnitString(hashMapOf())
+        println(changedUnitMap)
+        return UnitParser.createUnitString(changedUnitMap)
     }
 
 }

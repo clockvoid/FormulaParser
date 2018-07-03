@@ -19,7 +19,11 @@ class TimeTest {
     fun timeUnitTest() {
         val unit1 = Unit("m")
         val unit2 = Unit("m")
+        val unit3 = Unit("m'g")
+        val unit4 = Unit("g")
 
         assertThat(TimeUnit(unit1, unit2).evaluate()).isEqualTo("m^2")
+        assertThat(TimeUnit(unit1, unit3).evaluate()).isEqualTo("m^2'g")
+        assertThat(TimeUnit(unit1, unit4).evaluate()).isEqualTo("m'g")
     }
 }

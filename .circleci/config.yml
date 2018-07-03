@@ -20,8 +20,8 @@ jobs:
           command: ./gradlew jacocoTestReport
       - save_cache:
           paths:
-            - ~/build/reports
-          key: jacoco-{{ checksum "jacocoTestReport.xml" }}
+            - ~/build/reports/jacoco/test
+          key: jacoco-{{ checksum "~/build/reports/jacoco/test/jacocoTestReport.xml" }}
 general:
   artifacts:
     - "build/reports/jacoco"

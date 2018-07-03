@@ -21,6 +21,7 @@ jobs:
       - save_cache:
           paths:
             - ~/build/reports
+          key: jacoco-{{ checksum "jacocoTestReport.xml" }}
 general:
   artifacts:
     - "build/reports/jacoco"

@@ -19,7 +19,9 @@ class DivideTest {
     fun divideUnitTest() {
         val unit1 = Unit("m")
         val unit2 = Unit("m")
+        val unit3 = Unit("g")
 
         assertThat(DivideUnit(unit1, unit2).evaluate()).isEqualTo("void^0")
+        assertThat(DivideUnit(unit1, unit3).evaluate()).isEqualTo("m'g^-1")
     }
 }

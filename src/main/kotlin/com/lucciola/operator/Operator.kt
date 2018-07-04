@@ -16,10 +16,7 @@ abstract class Operator protected constructor(arg0: Termination, arg1: Terminati
     }
 
     fun getChildren(): ArrayList<Expression> {
-        val children: ArrayList<Expression> = ArrayList()
-        children.add(child1)
-        children.add(child2)
-        return children
+        return arrayListOf(this.child1, this.child2)
     }
 
     private fun setChildren(arg0: Termination, arg1: Termination) {

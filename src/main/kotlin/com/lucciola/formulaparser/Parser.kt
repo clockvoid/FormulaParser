@@ -31,8 +31,8 @@ class Parser(arg0: String) {
         val n: Expression = Number(parsedUnit[0])
         val u: Expression = Unit(parsedUnit[1])
         var ans: List<Expression> = ArrayList()
-        ans += arrayListOf(n)
-        ans += arrayListOf(u)
+        ans += listOf(n)
+        ans += listOf(u)
         return ans
     }
 

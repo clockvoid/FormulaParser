@@ -15,7 +15,8 @@ You will get `Expression` object and that's `evaluate()` Function will return th
 At this time, you have to `clone` this repository to your local and make Jar or something.
 
 ## Test
-At this time, there are no tests. This is terrible. I do will make it better.
+I'm working hard.
+I added code coverage for controlling test.
 
 ## Design
 I used Recursive Descent Parsing.

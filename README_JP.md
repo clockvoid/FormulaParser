@@ -8,6 +8,21 @@ KotlinとGradleを使って書き直しました！🎉
 Parserオブジェクトに式を文字列で渡して,compile()メソッドを呼び出して帰ってきたExpressionオブジェクトのevaluate()を呼び出すだけで,
 計算結果を文字列で返してくれます.
 
+## Installation
+以下の設定を`build.gradle`に記述するだけです！
+
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+dependencies {
+    implementation 'com.github.clockvoid:FormulaParser:v0.1.0'
+}
+```
+
 ## Usage
 コードをダウンロードしてIDEでプロジェクトを作り,Jarにまとめるなり,CLIでそれをするなり,どんな使い方でもできます.
 
